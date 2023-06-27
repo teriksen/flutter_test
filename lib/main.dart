@@ -115,7 +115,7 @@ void requestStoragePermission() async {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  Future<void> _getStoragePermission() async {
+  Future<void> _getStoragePermissionAndroid() async {
     DeviceInfoPlugin plugin = DeviceInfoPlugin();
     AndroidDeviceInfo android = await plugin.androidInfo;
     //bool permissionGranted = await Permission.storage.isGranted;
@@ -182,14 +182,14 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           _incrementCounter;
-          var status = await Permission.storage.status;
-          if (status.isDenied) {
-            requestCameraPermission();
-            _getStoragePermission();
-          }
-          if (status.isGranted) {
+          //var status = await Permission.storage.status;
+          //if (status.isDenied) {
+            //requestCameraPermission();
+            //_getStoragePermissionAndroid();
+          //}
+          //if (status.isGranted) {
             // Either the permission was already granted before or the user just granted it.
-            final inputImage = InputImage.fromFilePath("/sdcard/Download/scan_s1.png");
+            final inputImage = InputImage.fromFilePath("pdfscan.png");
             final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
             final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
             String text = recognizedText.text;
@@ -215,21 +215,21 @@ class _MyHomePageState extends State<MyHomePage> {
             //        Permission.camera,
             //        Permission.storage,
             //      ].request();
-          }
-          else {
-            print("----------------------------------------------------------------------------------------------------");
-            print("--------------------------------Could not obtain access to storage.---------------------------------");
-            print("----------------------------------------------------------------------------------------------------");
-          }
+          },
+          //else {
+          //  print("----------------------------------------------------------------------------------------------------");
+          //  print("--------------------------------Could not obtain access to storage.---------------------------------");
+          //  print("----------------------------------------------------------------------------------------------------");
+          //}
 
-          if (await status.isRestricted) {
-            print("----------------------------------------------------------------------------------------------------");
-            print("-------------------------OS restricts the permission from being granted.----------------------------");
-            print("----------------------------------------------------------------------------------------------------");
-          }
-          _incrementCounter;
+          //if (await status.isRestricted) {
+          //  print("----------------------------------------------------------------------------------------------------");
+          //  print("-------------------------OS restricts the permission from being granted.----------------------------");
+          //  print("----------------------------------------------------------------------------------------------------");
+          //}
+          //_incrementCounter;
           
-        },
+        
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

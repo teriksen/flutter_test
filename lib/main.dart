@@ -214,9 +214,10 @@ class _MyHomePageState extends State<MyHomePage> {
             //_getStoragePermissionAndroid();
           //}
           _getStoragePermissioniOS();
+          AssetBundle bundle = DefaultAssetBundle.of(context);
           //if (status.isGranted) {
             // Either the permission was already granted before or the user just granted it.
-            final inputImage = InputImage.fromFilePath("pdfscan.png");
+            final inputImage = InputImage.fromFilePath('assets/pdfscan.png');
             final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
             final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
             String text = recognizedText.text;

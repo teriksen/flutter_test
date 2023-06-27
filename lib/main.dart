@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
     } else {
-       if (await Permission.photos.request().isGranted) {
+      if (await Permission.photos.request().isGranted) {
             setState(() {
                //permissionGranted = true;
             });
@@ -146,6 +146,32 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<void> _getStoragePermissioniOS() async {
+    if (await Permission.storage.request().isGranted){
+      setState(() {
+        //permissionGranted = true;
+      });
+      print("----------");
+      print("Permission granted.");
+      print("----------");
+    }
+    else {
+      print("----------");
+      print("Permission not granted.");
+      print("----------");
+      if (await Permission.photos.request().isGranted) {
+            setState(() {
+               //permissionGranted = true;
+            });
+       } else if (await Permission.photos.request().isPermanentlyDenied) {
+           await openAppSettings();
+       } else if (await Permission.photos.request().isDenied) {
+           setState(() {
+               //permissionGranted = false;
+           });
+      }
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -187,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //requestCameraPermission();
             //_getStoragePermissionAndroid();
           //}
+          _getStoragePermissioniOS();
           //if (status.isGranted) {
             // Either the permission was already granted before or the user just granted it.
             final inputImage = InputImage.fromFilePath("pdfscan.png");
